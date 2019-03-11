@@ -1,80 +1,55 @@
 import React from "react";
-import ScoreTable from "./ScoreTable"
+import { connect } from 'react-redux';
+
 import "bootstrap/dist/css/bootstrap.css";
 import 'antd/dist/antd.css'
-import moment from "moment";
-import { connect } from 'react-redux';
+
+import ScoreTable from "./ScoreTable"
 import actions from '../redux/actions';
+import {
+  selectGames,
+  selectUnscoredGames,
+  selectUpcomingGames
+} from "../redux/selectors";
 
 class ScoreScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      games: [],
-      unscored_games: [],
-      upcoming_games: [],
-      modal: false,
-      error: false
-    };
-  }
-
-  componentDidMount() {
-    this.props.getGames()
-      .then(() => {
-        const unscored_games = this.props.games.filter((match) => (match.awayScore + match.homeScore === 0) && (moment() > moment(match.date)))
-        const upcoming_games = this.props.games.filter((match) => moment() <= moment(match.date))
-        this.setState(
-          { unscored_games,
-            upcoming_games }
-        );
-      })
-      .catch(error => {
-        console.log("error");
-        console.log(error);
-      });
-  }
-
-  renderUnscoredgames() {
-      if(this.state.unscored_games.length > 0)
-        return <ScoreTable 
-                title="Unscored Games"
-                games = {this.state.unscored_games}
-            />;
-      return "";
+  state = {
+    modal: false
   };
 
-  renderUpcominggames() {
-    if(this.state.upcoming_games.length > 0)
-        return <ScoreTable 
-                title="Upcoming Games"
-                games = {this.state.upcoming_games}
-            />;
-    return "";
-  }
+  componentDidMount = () => this.props.getGames();
 
-  setError = () => {
-    this.setState({
-      error: true
-    });
-  };
+  render = () => {
+    const { games, unscoredGames, upcomingGames } = this.props;
 
-  render() {
     return (
       <div>
-          {this.renderUnscoredgames()}
-          {this.renderUpcominggames()}
+          {unscoredGames.length && (
+            <ScoreTable 
+              title="Unscored Games"
+              games = {unscoredGames}
+            />
+          )}
+          {upcomingGames.length && (
+            <ScoreTable 
+              title="Upcoming Games"
+              games = {upcomingGames}
+            />
+          )}
           <ScoreTable 
             title="All games"
-            games={this.props.games}
+            games={games}
           />
       </div>
-    );
-  }
+    )
+  };
 }
 
-const mapStateToProps = (state) => ({
-  games: state.games
-})
+const mapStateToProps = state => ({
+  games: selectGames(state),
+  unscoredGames: selectUnscoredGames(state),
+  upcomingGames: selectUpcomingGames(state)
+});
 
 export default connect(mapStateToProps, {
   getGames: actions.getGames
