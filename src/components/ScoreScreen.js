@@ -3,10 +3,12 @@ import axios from "axios";
 import ScoreTable from "./ScoreTable"
 import "bootstrap/dist/css/bootstrap.css";
 import moment from "moment";
+import { connect } from 'react-redux';
 
+import actions from '../redux/actions';
 const matches_url = "https://volleyballapi.herokuapp.com/matches";
 
-export default class ScoreScreen extends React.Component {
+class ScoreScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,6 +21,7 @@ export default class ScoreScreen extends React.Component {
   }
 
   componentDidMount() {
+    this.props.getGames();
     axios
       .get(matches_url)
       .then(response => {
@@ -78,3 +81,11 @@ export default class ScoreScreen extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  games: state.games
+})
+
+export default connect(mapStateToProps, {
+  getGames: actions.getGames
+})(ScoreScreen);
