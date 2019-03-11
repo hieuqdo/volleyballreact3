@@ -17,7 +17,7 @@ class ScoreScreen extends React.Component {
     modal: false
   };
 
-  componentDidMount = () => this.props.getGames();
+  componentDidMount = () => this.props.fetchGames();
 
   render = () => {
     const { games, unscoredGames, upcomingGames } = this.props;
@@ -52,5 +52,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  getGames: actions.getGames
+  fetchGames: actions.fetchGames
 })(ScoreScreen);

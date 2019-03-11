@@ -1,14 +1,22 @@
 import { API } from "../utils";
-import { GET_GAMES } from "./constants";
+import {
+  FETCH_GAMES,
+  UPDATE_GAMES
+} from "./constants";
 
-export const getGames = () => ({
-  type: GET_GAMES,
-  payload: API.get('games', {
-    include: ['homeTeam', 'awayTeam', 'location']})
+export const fetchGames = id => ({
+  type: FETCH_GAMES,
+  payload: API.get(`games${id ? `/${id}` : ''}`, {
+    include: ['homeTeam', 'awayTeam', 'location']
+  })
+});
+
+export const updateGames = values => ({
+  type: UPDATE_GAMES,
+  payload: API.patch('game', values)
 });
 
 export default {
-  getGames
+  fetchGames,
+  updateGames
 }
-
-export const test = 'test';
