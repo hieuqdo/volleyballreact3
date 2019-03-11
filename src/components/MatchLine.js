@@ -4,6 +4,7 @@ import "./MatchLine.css";
 import ScoreDropdown from "./ScoreDropdown";
 import SaveConfModal from "./SaveConfModal";
 import moment from "moment";
+import API from "../utils/API"
 
 const verticalAlign = {
   verticalAlign: "middle"
@@ -17,9 +18,11 @@ export default class MatchLine extends React.Component {
   constructor(props) {
     super(props);
 
+    console.log(props)
+
     this.state = {
-      home_score: props.home_score || 0,
-      away_score: props.away_score || 0,
+      homeScore: props.homeScore || 0,
+      awayScore: props.awayScore || 0,
       vs_text: "vs",
       confModal: false
     };
@@ -27,10 +30,10 @@ export default class MatchLine extends React.Component {
   }
 
   color() {
-    const home_score = this.state.home_score;
-    const away_score = this.state.away_score;
+    const homeScore = this.state.homeScore;
+    const awayScore = this.state.awayScore;
 
-    if (home_score === 0 && away_score === 0) {
+    if (homeScore === 0 && awayScore === 0) {
       return "primary";
     }
     return "secondary";
@@ -49,55 +52,51 @@ export default class MatchLine extends React.Component {
   };
 
   changeHome(e) {
-    let home_score = 0;
-    let away_score = 0;
+    let homeScore = 0;
+    let awayScore = 0;
 
     if (e.currentTarget.value >= 0) {
-      home_score = e.currentTarget.value;
-      away_score = 3 - e.currentTarget.value;
+      homeScore = e.currentTarget.value;
+      awayScore = 3 - e.currentTarget.value;
     }
 
     this.setState(
       {
-        selected_home_score: home_score,
-        selected_away_score: away_score
+        selected_homeScore: homeScore,
+        selected_awayScore: awayScore
       },
       this.toggleConfModal()
     );
   }
 
   changeAway(e) {
-    let home_score = 0;
-    let away_score = 0;
+    let homeScore = 0;
+    let awayScore = 0;
 
     if (e.currentTarget.value >= 0) {
-      away_score = e.currentTarget.value;
-      home_score = 3 - e.currentTarget.value;
+      awayScore = e.currentTarget.value;
+      homeScore = 3 - e.currentTarget.value;
     }
 
     this.setState(
       {
-        selected_home_score: home_score,
-        selected_away_score: away_score
+        selected_homeScore: homeScore,
+        selected_awayScore: awayScore
       },
       this.toggleConfModal()
     );
   }
 
   saveScore() {
-    var match_id_url = `${this.props.matches_url}/${this.props.id}`;
-
-    axios
-      .patch(match_id_url, {
-        match: {
-          home_score: this.state.selected_home_score,
-          away_score: this.state.selected_away_score
-        }
-      })
+    API.patch(`Games/${this.props.id}`,
+    {
+      "homeScore": this.state.selected_homeScore, 
+      "awayScore": this.state.selected_awayScore
+    })
       .then(response => {
         this.setState({
-          home_score: this.state.selected_home_score,
-          away_score: this.state.selected_away_score,
+          homeScore: this.state.selected_homeScore,
+          awayScore: this.state.selected_awayScore,
           confModal: false
         });
         this.props.showModal("Save Successful", "Thanks!", "Have a nice day");
@@ -108,7 +107,6 @@ export default class MatchLine extends React.Component {
             confModal: false
           },
           () => {
-            console.log(match_id_url + ": " + error);
             this.props.onError();
             this.props.showModal("Save Failed", "" + error, "Okay");
           }
@@ -125,8 +123,8 @@ export default class MatchLine extends React.Component {
       <tr style={verticalAlign}>
         <td style={verticalAlign}>{moment(this.props.date).format("ddd, MMM D")}</td>
         <td align="right" style={verticalAlign}>
-          <span style={this.state.home_score > 1 ? { fontWeight: "bold" } : {}}>
-            {this.props.home_team}
+          <span style={this.state.homeScore > 1 ? { fontWeight: "bold" } : {}}>
+            {this.props.homeTeam.name}
           </span>
         </td>
         <td style={verticalAlign}>
@@ -135,10 +133,10 @@ export default class MatchLine extends React.Component {
           ) : (
             <ScoreDropdown
               onClick={this.changeHome.bind(this)}
-              team_name={this.props.home_team}
-              score={this.state.home_score}
+              team_name={this.props.homeTeam.name}
+              score={this.state.homeScore}
               disabled={this.disableFuture.bind(this)()}
-              color={this.state.home_score > 1 ? "info" : this.color()}
+              color={this.color()}
             />
           )}
         </td>
@@ -149,26 +147,26 @@ export default class MatchLine extends React.Component {
           ) : (
             <ScoreDropdown
               onClick={this.changeAway.bind(this)}
-              team_name={this.props.away_team}
-              score={this.state.away_score}
+              team_name={this.props.awayTeam.name}
+              score={this.state.awayScore}
               disabled={this.disableFuture.bind(this)()}
-              color={this.state.away_score > 1 ? "info" : this.color()}
+              color={this.color()}//{this.state.awayScore > 1 ? "info" : this.color()}
             />
           )}
         </td>
         <td style={verticalAlign}>
-          <span style={this.state.away_score > 1 ? { fontWeight: "bold" } : {}}>
-            {this.props.away_team}
+          <span style={this.state.awayScore > 1 ? { fontWeight: "bold" } : {}}>
+            {this.props.awayTeam.name}
           </span>
         </td>
-        <td style={verticalAlign}>{this.props.location}</td>
+        <td style={verticalAlign}>{this.props.location.name}</td>
         <SaveConfModal
           isOpen={this.state.confModal}
           toggle={this.toggleConfModal}
-          home_team={this.props.home_team}
-          home_score={this.state.selected_home_score}
-          away_team={this.props.away_team}
-          away_score={this.state.selected_away_score}
+          homeTeam={this.props.homeTeam}
+          homeScore={this.state.selected_homeScore}
+          awayTeam={this.props.awayTeam}
+          awayScore={this.state.selected_awayScore}
           onClick={this.saveScore}
           date={this.props.date}
           location={this.props.location}

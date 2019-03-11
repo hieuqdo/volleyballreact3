@@ -2,6 +2,7 @@ import React from "react";
 import { Table } from "reactstrap";
 import MatchLine from "./MatchLine";
 import "bootstrap/dist/css/bootstrap.css";
+import 'antd/dist/antd.css'
 import ModalMsg from "./ModalMsg";
 import moment from "moment";
 
@@ -64,21 +65,20 @@ export default class ScoreTable extends React.Component {
             <thead>
               <tr>
                 <th>Date</th>
-                <th>Home</th>
-                <th />
-                <th />
-                <th />
-                <th>Away</th>
+                <th> </th>
+                <th> </th>
+                <th> </th>
+                <th> </th>
+                <th> </th>
                 <th>Location</th>
               </tr>
             </thead>
             <tbody>
-              {this.props.matches
+              {this.props.games
                 .sort((a, b) => moment(a.date) - moment(b.date))
                 .map((item, index) => (
                   <MatchLine
                     onError={this.setError}
-                    matches_url={this.props.matches_url}
                     key={index}
                     showModal={this.toggleModal}
                     {...item}

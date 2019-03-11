@@ -2,58 +2,58 @@ import React from "react";
 import axios from "axios";
 import ScoreTable from "./ScoreTable"
 import "bootstrap/dist/css/bootstrap.css";
+import 'antd/dist/antd.css'
 import moment from "moment";
-
-const matches_url = "https://volleyballapi.herokuapp.com/matches";
+import API from "../utils/API";
 
 export default class ScoreScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      matches: [],
-      unscored_matches: [],
-      upcoming_matches: [],
+      games: [],
+      unscored_games: [],
+      upcoming_games: [],
       modal: false,
       error: false
     };
   }
 
   componentDidMount() {
-    axios
-      .get(matches_url)
-      .then(response => {
-        const matches = response.data.matches;
-        const unscored_matches = matches.filter((match) => match.away_score + match.home_score === 0)
-        const upcoming_matches = matches.filter((match) => moment() <= moment(match.date))
+    API.get('Games', { include:["awayTeam","homeTeam","location"]})
 
-        this.setState(
-          { matches,
-            unscored_matches,
-            upcoming_matches }
-        );
-      })
-      .catch(error => {
-        console.log("error");
-        console.log(error);
-      });
+    // axios
+    // .get('https://rbvc.herokuapp.com/api/Games?filter=%7B%22include%22%3A%5B%22awayTeam%22%20%2C%22homeTeam%22%2C%22location%22%5D%7D')
+    .then(response => {
+      const games = response.data;
+      const unscored_games = games.filter((game) => game.awayScore + game.homeScore === 0)
+      const upcoming_games = games.filter((game) => moment() <= moment(game.date))
+
+    this.setState(
+      { games,
+        unscored_games,
+        upcoming_games }
+    );
+    })
+    .catch(error => {
+      console.log("error");
+      console.log(error);
+    });
   }
 
-  renderUnscoredMatches() {
-      if(this.state.unscored_matches.length > 0)
+  renderUnscoredgames() {
+      if(this.state.unscored_games.length > 0)
         return <ScoreTable 
-                title="Unscored Matches"
-                matches = {this.state.unscored_matches}
-                matches_url={matches_url}
+                title="Unscored Games"
+                games = {this.state.unscored_games}
             />;
       return "";
   };
 
-  renderUpcomingMatches() {
-    if(this.state.upcoming_matches.length > 0)
+  renderUpcominggames() {
+    if(this.state.upcoming_games.length > 0)
         return <ScoreTable 
-                title="Upcoming Matches"
-                matches = {this.state.upcoming_matches}
-                matches_url={matches_url}
+                title="Upcoming Games"
+                games = {this.state.upcoming_games}
             />;
     return "";
   }
@@ -67,12 +67,11 @@ export default class ScoreScreen extends React.Component {
   render() {
     return (
       <div>
-          {this.renderUnscoredMatches()}
-          {this.renderUpcomingMatches()}
+          {this.renderUnscoredgames()}
+          {this.renderUpcominggames()}
           <ScoreTable 
-            title="All Matches"
-            matches={this.state.matches}
-            matches_url={matches_url}
+            title="All games"
+            games={this.state.games}
           />
       </div>
     );
