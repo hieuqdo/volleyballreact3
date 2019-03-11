@@ -1,8 +1,12 @@
 import React from "react";
 import { render } from "react-dom";
+import { Provider } from 'react-redux';
+
+import "bootstrap/dist/css/bootstrap.css";
+
+import store from './redux/store';
 import ScoreScreen from "./components/ScoreScreen";
 import Navbar from "./components/Navbar";
-import "bootstrap/dist/css/bootstrap.css";
 
 const styles = {
   fontFamily: "sans-serif",
@@ -22,10 +26,10 @@ const scoreDiv = {
 };
 
 const App = () => (
-  <div>
+  <Provider store={store}>
     <Navbar />
     <ScoreScreen />
-  </div>
+  </Provider>
 );
 
 render(<App />, document.getElementById("root"));

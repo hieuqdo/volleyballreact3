@@ -1,23 +1,22 @@
 import axios from 'axios';
-import queryString from 'querystring';
 
 const path = 'https://rbvc.herokuapp.com/api/';
 
 export default class API {
 
   static get = async (request, query) => await axios
-    .get(path + request, queryString.stringify(query))
+    .get(`${path}${request}${query ? `?filter=${JSON.stringify(query)}` : ''}`)
     .then(({ data }) => data);
-  
+
   static post = async (request, values) => await axios
-    .post(path + request, values)
+    .post(`${path}${request}`, values)
     .then(({ data }) => data);
   
   static patch = async (request, values) => await axios
-    .patch(path + request, values)
+    .patch(`${path}${request}`, values)
     .then(({ data }) => data);
   
   static delete = async request => await axios
-    .delete(path + request)
+    .delete(`${path}${request}`)
     .then(({ data }) => data);
 }

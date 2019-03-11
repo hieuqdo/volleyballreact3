@@ -1,12 +1,12 @@
 import React from "react";
-import axios from "axios";
 import ScoreTable from "./ScoreTable"
 import "bootstrap/dist/css/bootstrap.css";
 import 'antd/dist/antd.css'
 import moment from "moment";
-import API from "../utils/API";
+import { connect } from 'react-redux';
+import actions from '../redux/actions';
 
-export default class ScoreScreen extends React.Component {
+class ScoreScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,25 +19,19 @@ export default class ScoreScreen extends React.Component {
   }
 
   componentDidMount() {
-    API.get('Games', { include:["awayTeam","homeTeam","location"]})
-
-    // axios
-    // .get('https://rbvc.herokuapp.com/api/Games?filter=%7B%22include%22%3A%5B%22awayTeam%22%20%2C%22homeTeam%22%2C%22location%22%5D%7D')
-    .then(response => {
-      const games = response.data;
-      const unscored_games = games.filter((game) => game.awayScore + game.homeScore === 0)
-      const upcoming_games = games.filter((game) => moment() <= moment(game.date))
-
-    this.setState(
-      { games,
-        unscored_games,
-        upcoming_games }
-    );
-    })
-    .catch(error => {
-      console.log("error");
-      console.log(error);
-    });
+    this.props.getGames()
+      .then(() => {
+        const unscored_games = this.props.games.filter((match) => match.awayScore + match.homeScore === 0)
+        const upcoming_games = this.props.games.filter((match) => moment() <= moment(match.date))
+        this.setState(
+          { unscored_games,
+            upcoming_games }
+        );
+      })
+      .catch(error => {
+        console.log("error");
+        console.log(error);
+      });
   }
 
   renderUnscoredgames() {
@@ -77,3 +71,11 @@ export default class ScoreScreen extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  games: state.games
+})
+
+export default connect(mapStateToProps, {
+  getGames: actions.getGames
+})(ScoreScreen);
