@@ -1,11 +1,12 @@
 import axios from 'axios';
+import queryString from 'querystring';
 
 const path = 'https://rbvc.herokuapp.com/api/';
 
 export default class API {
 
-  static get = async request => await axios
-    .get(path + request)
+  static get = async (request, query) => await axios
+    .get(path + request, queryString.stringify(query))
     .then(({ data }) => data);
   
   static post = async (request, values) => await axios
