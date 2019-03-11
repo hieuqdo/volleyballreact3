@@ -21,7 +21,7 @@ class ScoreScreen extends React.Component {
   componentDidMount() {
     this.props.getGames()
       .then(() => {
-        const unscored_games = this.props.games.filter((match) => match.awayScore + match.homeScore === 0)
+        const unscored_games = this.props.games.filter((match) => (match.awayScore + match.homeScore === 0) && (moment() > moment(match.date)))
         const upcoming_games = this.props.games.filter((match) => moment() <= moment(match.date))
         this.setState(
           { unscored_games,
@@ -65,7 +65,7 @@ class ScoreScreen extends React.Component {
           {this.renderUpcominggames()}
           <ScoreTable 
             title="All games"
-            games={this.state.games}
+            games={this.props.games}
           />
       </div>
     );

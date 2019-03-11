@@ -4,7 +4,7 @@ import { GET_GAMES } from "./constants";
 export const getGames = () => ({
   type: GET_GAMES,
   payload: API.get('games', {
-    include: ['homeTeam', 'awayTeam']})
+    include: ['homeTeam', 'awayTeam', 'location']})
 });
 
 export default {
