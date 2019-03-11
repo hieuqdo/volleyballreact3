@@ -1,9 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
-import ScoreTable from "./components/ScoreTable";
-import MatchLine from "./components/MatchLine";
+import ScoreScreen from "./components/ScoreScreen";
 import Navbar from "./components/Navbar";
-import { Table } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.css";
 
 const styles = {
@@ -26,7 +24,7 @@ const scoreDiv = {
 const App = () => (
   <div>
     <Navbar />
-    <ScoreTable />
+    <ScoreScreen />
   </div>
 );
 

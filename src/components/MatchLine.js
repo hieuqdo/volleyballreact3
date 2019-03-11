@@ -3,6 +3,7 @@ import axios from "axios";
 import "./MatchLine.css";
 import ScoreDropdown from "./ScoreDropdown";
 import SaveConfModal from "./SaveConfModal";
+import moment from "moment";
 
 const verticalAlign = {
   verticalAlign: "middle"
@@ -122,7 +123,7 @@ export default class MatchLine extends React.Component {
   render() {
     return (
       <tr style={verticalAlign}>
-        <td style={verticalAlign}>{this.props.date}</td>
+        <td style={verticalAlign}>{moment(this.props.date).format("ddd, MMM D")}</td>
         <td align="right" style={verticalAlign}>
           <span style={this.state.home_score > 1 ? { fontWeight: "bold" } : {}}>
             {this.props.home_team}

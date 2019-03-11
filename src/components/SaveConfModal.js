@@ -19,14 +19,16 @@ export default class SaveConfModal extends React.Component {
         <ModalHeader toggle={this.toggle}>Confirm Score Update</ModalHeader>
         <ModalBody>
           <Table borderless align="center" style={{ width: "60%" }}>
-            <tr style={this.props.home_score > 1 ? { fontWeight: "bold" } : {}}>
-              <td>{this.props.home_team}</td>
-              <td>{this.props.home_score}</td>
-            </tr>
-            <tr style={this.props.away_score > 1 ? { fontWeight: "bold" } : {}}>
-              <td>{this.props.away_team}</td>
-              <td>{this.props.away_score}</td>
-            </tr>
+            <tbody>
+              <tr style={this.props.home_score > 1 ? { fontWeight: "bold" } : {}}>
+                <td>{this.props.home_team}</td>
+                <td>{this.props.home_score}</td>
+              </tr>
+              <tr style={this.props.away_score > 1 ? { fontWeight: "bold" } : {}}>
+                <td>{this.props.away_team}</td>
+                <td>{this.props.away_score}</td>
+              </tr>
+            </tbody>
           </Table>
         </ModalBody>
         <ModalFooter>

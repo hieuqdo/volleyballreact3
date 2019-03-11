@@ -1,12 +1,9 @@
 import React from "react";
 import { Table } from "reactstrap";
 import MatchLine from "./MatchLine";
-import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
 import ModalMsg from "./ModalMsg";
 import moment from "moment";
-
-const matches_url = "https://volleyballapi.herokuapp.com/matches";
 
 const styles = {
   fontFamily: "sans-serif",
@@ -29,34 +26,10 @@ export default class ScoreTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
       modal: false,
       error: false
     };
   }
-
-  componentDidMount() {
-    axios
-      .get(matches_url)
-      .then(response => {
-        const data = response.data.matches;
-        this.setState(
-          { data } //.sort((a, b) => a.date > b.date)
-        );
-      })
-      .catch(error => {
-        console.log("error");
-        console.log(error);
-      });
-  }
-
-  sortMatches = (a, b) => {
-    let a_total = a.home_score + a.away_score;
-    let b_total = b.home_score + b.away_score;
-
-    if (a_total !== b_total) return a_total - b_total;
-    return moment(a.date) - moment(b.date);
-  };
 
   toggleModal = (header, body, footer) => {
     if (this.state.modal) {
@@ -84,7 +57,7 @@ export default class ScoreTable extends React.Component {
     return (
       <div style={styles}>
         <br />
-        <h2>Games</h2>
+        <h2>{this.props.title}</h2>
         <br />
         <div style={scoreDiv}>
           <Table>
@@ -100,12 +73,12 @@ export default class ScoreTable extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.data
-                .sort((a, b) => this.sortMatches(a, b))
+              {this.props.matches
+                .sort((a, b) => moment(a.date) - moment(b.date))
                 .map((item, index) => (
                   <MatchLine
                     onError={this.setError}
-                    matches_url={matches_url}
+                    matches_url={this.props.matches_url}
                     key={index}
                     showModal={this.toggleModal}
                     {...item}
