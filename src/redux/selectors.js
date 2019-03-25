@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect';
 import moment from 'moment';
 
-const getGames = state => state.games;
+const getGames = state => state.reducer.games;
+const getPath = state => state.router.location.pathname;
 
 export const selectGames = createSelector(
   getGames,
@@ -17,4 +18,9 @@ export const selectUnscoredGames = createSelector(
 export const selectUpcomingGames = createSelector(
   getGames,
   games => games.filter(match => moment() <= moment(match.date))
+);
+
+export const selectPath = createSelector(
+  getPath,
+  path => path
 );

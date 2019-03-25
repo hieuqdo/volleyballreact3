@@ -27,7 +27,7 @@ class Teams extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: any) => ({
-    teams: state.teams
+    teams: state.reducer.teams
 });
 
 const mapDispatchToProps = {
