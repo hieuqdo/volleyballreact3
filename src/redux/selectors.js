@@ -10,7 +10,8 @@ export const selectGames = createSelector(
 
 export const selectUnscoredGames = createSelector(
   getGames,
-  games => games.filter(match => !match.awayScore && !match.homeScore && moment() > moment(match.date))
+  games =>
+    games.filter(match => !match.awayScore && !match.homeScore && moment() > moment(match.date))
 );
 
 export const selectUpcomingGames = createSelector(

@@ -1,39 +1,58 @@
+/** @jsx jsx */
 import React from 'react';
+import { jsx, css } from '@emotion/core';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
+import { Layout, Breadcrumb } from 'antd';
+
+import 'bootstrap/dist/css/bootstrap.css';
+import 'antd/dist/antd.css';
 
 import store from './redux/store';
-import Navbar from './components/Navbar';
+import { Navbar } from './components';
 import { Main, Teams } from './pages';
 
+const style = css`
+  .ant-layout-header {
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+  }
 
-const styles = {
-  fontFamily: 'sans-serif',
-  textAlign: 'center'
-};
+  .ant-layout-content {
+    padding: 32px;
+    margin-top: 64px;
+  }
 
-const styleTableCell = {
-  padding: '15px',
-  textAlign: 'left'
-};
-
-const scoreDiv = {
-  margin: 'auto',
-  width: '90%',
-  maxWidth: '1000px',
-  textAlign: 'left'
-};
+  .ant-layout-footer {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.65);
+    background-color: #001529;
+  }
+`;
 
 export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <Router>
-          <Navbar />
-          <Route path="/" exact component={Main} />
-          <Route path="/schedule" component={Main} />
-          <Route path="/teams" component={Teams} />
-        </Router>
+        <BrowserRouter>
+          <Layout css={style}>
+            <Layout.Header>
+              <Navbar />
+            </Layout.Header>
+            <Layout.Content>
+              {/* <Breadcrumb style={{ margin: '16px 0' }}>
+                <Breadcrumb.Item>Home</Breadcrumb.Item>
+                <Breadcrumb.Item>List</Breadcrumb.Item>
+                <Breadcrumb.Item>App</Breadcrumb.Item>
+              </Breadcrumb> */}
+              <Route path="/" exact component={Main} />
+              <Route path="/schedule" component={Main} />
+              <Route path="/teams" component={Teams} />
+            </Layout.Content>
+            <Layout.Footer>by Pho House</Layout.Footer>
+          </Layout>
+        </BrowserRouter>
       </Provider>
     );
   }
