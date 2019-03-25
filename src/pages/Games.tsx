@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { Radio } from 'antd';
 
-import ScoreTable from './ScoreTable';
+import { ScoreTable } from '../components';
 import actions from '../redux/actions';
 import { selectGames } from '../redux/selectors';
 import { RadioChangeEvent } from 'antd/lib/radio';

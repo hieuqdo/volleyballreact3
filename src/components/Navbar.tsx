@@ -14,7 +14,11 @@ type State = {
 const linkMap: {
   name: string;
   path: string;
-}[] = [{ name: 'Home', path: '/' }, { name: 'Teams', path: '/teams' }];
+}[] = [
+  { name: 'Home', path: '/' },
+  { name: 'Games', path: '/games' },
+  { name: 'Teams', path: '/teams' }
+];
 
 const style = css`
   display: flex;

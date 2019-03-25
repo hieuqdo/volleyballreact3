@@ -11,10 +11,10 @@ import './index.css';
 
 import store from './redux/store';
 import { Navbar } from './components';
-import { Main, Teams } from './pages';
+import { Splash, Games, Teams } from './pages';
 
 const style = css`
-  height: 100%;
+  min-height: 100%;
 
   .ant-layout-header {
     position: fixed;
@@ -50,8 +50,8 @@ export default class App extends React.Component {
                 <Breadcrumb.Item>List</Breadcrumb.Item>
                 <Breadcrumb.Item>App</Breadcrumb.Item>
               </Breadcrumb> */}
-              <Route path="/" exact component={Main} />
-              <Route path="/schedule" component={Main} />
+              <Route path="/" exact component={Splash} />
+              <Route path="/games" component={Games} />
               <Route path="/teams" component={Teams} />
             </Layout.Content>
             <Layout.Footer>
