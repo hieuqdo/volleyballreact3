@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import store from './redux/store';
 import Navbar from './components/Navbar';
-import { Main } from './pages';
+import { Main, Teams } from './pages';
+
 
 const styles = {
   fontFamily: 'sans-serif',
@@ -31,6 +32,7 @@ export default class App extends React.Component {
           <Navbar />
           <Route path="/" exact component={Main} />
           <Route path="/schedule" component={Main} />
+          <Route path="/teams" component={Teams} />
         </Router>
       </Provider>
     );
