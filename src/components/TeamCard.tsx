@@ -1,6 +1,6 @@
 import React from "react";
 import 'antd/dist/antd.css'
-import { Card } from 'antd';
+import { Card, Col } from 'antd';
 
 const { Meta } = Card;
 
@@ -16,16 +16,18 @@ export default class TeamCard extends React.Component<Team> {
   
     render() {
       return (
-        <Card
-            hoverable
-            style={{ width: 240 }}
-            cover={<img alt="teampic" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-        >
-        <Meta
-          title={this.props.name}
-          description={this.props.company.name}
-        />
-      </Card>
+        <div>
+            <Card
+                hoverable
+                style={{ width: 240, margin: 8 }}
+                cover={<img alt="teampic" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+                >
+                <Meta
+                title={this.props.name}
+                description={this.props.company.name}
+                />
+            </Card>
+        </div>
       );
     }
   }
