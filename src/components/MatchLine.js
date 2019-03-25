@@ -18,8 +18,6 @@ export default class MatchLine extends React.Component {
   constructor(props) {
     super(props);
 
-    console.log(props)
-
     this.state = {
       homeScore: props.homeScore || 0,
       awayScore: props.awayScore || 0,
