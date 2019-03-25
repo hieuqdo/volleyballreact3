@@ -6,7 +6,7 @@ const { Meta } = Card;
 
 interface Team {
     name: string
-    company: string
+    company: { name: string }
 }
 
 export default class TeamCard extends React.Component<Team> {
@@ -23,7 +23,7 @@ export default class TeamCard extends React.Component<Team> {
         >
         <Meta
           title={this.props.name}
-          description={this.props.company}
+          description={this.props.company.name}
         />
       </Card>
       );

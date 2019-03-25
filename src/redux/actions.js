@@ -15,6 +15,7 @@ export const fetchGames = id => ({
 export const fetchTeams = id => ({
   type: FETCH_TEAMS,
   payload: API.get(`teams${id ? `/${id}` : ''}`, {
+    include: ['company']
   })
 });
 
@@ -25,5 +26,6 @@ export const updateGames = values => ({
 
 export default {
   fetchGames,
+  fetchTeams,
   updateGames
 }
