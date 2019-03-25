@@ -1,26 +1,26 @@
-import React from "react";
-import { Table } from "reactstrap";
-import MatchLine from "./MatchLine";
-import "bootstrap/dist/css/bootstrap.css";
-import 'antd/dist/antd.css'
-import ModalMsg from "./ModalMsg";
-import moment from "moment";
+import React from 'react';
+import { Table } from 'reactstrap';
+import MatchLine from './MatchLine';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'antd/dist/antd.css';
+import ModalMsg from './ModalMsg';
+import moment from 'moment';
 
 const styles = {
-  fontFamily: "sans-serif",
-  textAlign: "center"
+  fontFamily: 'sans-serif',
+  textAlign: 'center'
 };
 
 const styleTableCell = {
-  padding: "15px",
-  textAlign: "left"
+  padding: '15px',
+  textAlign: 'left'
 };
 
 const scoreDiv = {
-  margin: "auto",
-  width: "90%",
-  maxWidth: "1000px",
-  textAlign: "left"
+  margin: 'auto',
+  width: '90%',
+  maxWidth: '1000px',
+  textAlign: 'left'
 };
 
 export default class ScoreTable extends React.Component {
@@ -65,11 +65,11 @@ export default class ScoreTable extends React.Component {
             <thead>
               <tr>
                 <th>Date</th>
-                <th> </th>
-                <th> </th>
-                <th> </th>
-                <th> </th>
-                <th> </th>
+                <th />
+                <th />
+                <th />
+                <th />
+                <th />
                 <th>Location</th>
               </tr>
             </thead>
@@ -94,7 +94,7 @@ export default class ScoreTable extends React.Component {
           header={this.state.modalHeader}
           body={this.state.modalBody}
           footer={this.state.modalFooter}
-          color={this.state.error ? "danger" : "success"}
+          color={this.state.error ? 'danger' : 'success'}
         />
       </div>
     );

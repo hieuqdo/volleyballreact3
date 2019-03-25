@@ -7,12 +7,15 @@ import { Layout, Breadcrumb } from 'antd';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'antd/dist/antd.css';
+import './index.css';
 
 import store from './redux/store';
 import { Navbar } from './components';
 import { Main, Teams } from './pages';
 
 const style = css`
+  height: 100%;
+
   .ant-layout-header {
     position: fixed;
     z-index: 10;
@@ -20,14 +23,15 @@ const style = css`
   }
 
   .ant-layout-content {
-    padding: 32px;
     margin-top: 64px;
+    flex: 1 0 auto;
   }
 
   .ant-layout-footer {
     text-align: center;
     color: rgba(255, 255, 255, 0.65);
     background-color: #001529;
+    flex-shrink: 0;
   }
 `;
 
@@ -50,7 +54,16 @@ export default class App extends React.Component {
               <Route path="/schedule" component={Main} />
               <Route path="/teams" component={Teams} />
             </Layout.Content>
-            <Layout.Footer>by Pho House</Layout.Footer>
+            <Layout.Footer>
+              Site by The Pho House
+              <br />
+              <div>
+                Logo made with{' '}
+                <a href="https://www.designevo.com/en/" title="Free Online Logo Maker">
+                  DesignEvo
+                </a>
+              </div>
+            </Layout.Footer>
           </Layout>
         </BrowserRouter>
       </Provider>
