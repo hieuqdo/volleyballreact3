@@ -19,6 +19,7 @@ const reducer = produce((draft, action) => {
       draft.teams = action.payload;
       break;
     default:
+      break;
   }
 }, defaultState);
 

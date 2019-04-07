@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const path = 'https://rbvc.herokuapp.com/api/';
+// const path = 'https://rbvc.herokuapp.com/api/';
+const path = 'localhost:8080/api/'
 
 export default class API {
 
