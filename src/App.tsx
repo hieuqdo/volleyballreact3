@@ -9,7 +9,7 @@ import 'antd/dist/antd.css';
 import './index.css';
 
 import { Navbar } from './components';
-import { Splash, Games, Teams } from './pages';
+import { Splash, Games, Teams, TeamPage } from './pages';
 
 const style = css`
   min-height: 100%;
@@ -48,7 +48,8 @@ export default class App extends React.Component {
           </Breadcrumb> */}
           <Route path="/" exact component={Splash} />
           <Route path="/games" component={Games} />
-          <Route path="/teams" component={Teams} />
+          <Route path="/teams" exact component={Teams} />
+          <Route path="/tempteam" component={TeamPage} />
         </Layout.Content>
         <Layout.Footer>
           Site by The Pho House

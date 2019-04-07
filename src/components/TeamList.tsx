@@ -15,7 +15,7 @@ const tileLayout = css({
   justifyContent: "center",
 });
 
-const center = css({
+const container = css({
   display: "flex",
   justifyContent: "center",
 })
@@ -23,7 +23,7 @@ const center = css({
 export default class TeamList extends React.Component<Props> {
   render = () => {
     return (
-      <div css={center}>
+      <div css={container}>
         <div css={tileLayout}>
           {this.props.teams.sort((a, b) => {
                     if(a.name < b.name) { return -1; }

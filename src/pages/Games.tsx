@@ -75,7 +75,7 @@ class ScoreScreen extends React.Component<Props, State> {
     to: moment().add(1, 'months')
   };
 
-  // componentDidMount = () => this.props.fetchGames();
+  componentDidMount = () => this.props.fetchGames();
 
   changeFilter = (event: RadioChangeEvent) => this.setState({ filter: event.target.value });
 

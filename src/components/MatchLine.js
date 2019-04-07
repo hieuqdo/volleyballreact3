@@ -173,3 +173,6 @@ export default class MatchLine extends React.Component {
     );
   }
 }
+
+// todo: if currently logged on player is on this team, allow player to reschedule the match
+// do not allow 2 matches to be scheduled on the same day & location combination
