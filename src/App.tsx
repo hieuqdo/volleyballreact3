@@ -1,15 +1,13 @@
 /** @jsx jsx */
 import React from 'react';
 import { jsx, css } from '@emotion/core';
-import { Provider } from 'react-redux';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { Layout, Breadcrumb } from 'antd';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'antd/dist/antd.css';
 import './index.css';
 
-import store from './redux/store';
 import { Navbar } from './components';
 import { Splash, Games, Teams } from './pages';
 
@@ -38,35 +36,31 @@ const style = css`
 export default class App extends React.Component {
   render() {
     return (
-      <Provider store={store}>
-        <BrowserRouter>
-          <Layout css={style}>
-            <Layout.Header>
-              <Navbar />
-            </Layout.Header>
-            <Layout.Content>
-              {/* <Breadcrumb style={{ margin: '16px 0' }}>
-                <Breadcrumb.Item>Home</Breadcrumb.Item>
-                <Breadcrumb.Item>List</Breadcrumb.Item>
-                <Breadcrumb.Item>App</Breadcrumb.Item>
-              </Breadcrumb> */}
-              <Route path="/" exact component={Splash} />
-              <Route path="/games" component={Games} />
-              <Route path="/teams" component={Teams} />
-            </Layout.Content>
-            <Layout.Footer>
-              Site by The Pho House
-              <br />
-              <div>
-                Logo made with{' '}
-                <a href="https://www.designevo.com/en/" title="Free Online Logo Maker">
-                  DesignEvo
-                </a>
-              </div>
-            </Layout.Footer>
-          </Layout>
-        </BrowserRouter>
-      </Provider>
+      <Layout css={style}>
+        <Layout.Header>
+          <Navbar />
+        </Layout.Header>
+        <Layout.Content>
+          {/* <Breadcrumb style={{ margin: '16px 0' }}>
+            <Breadcrumb.Item>Home</Breadcrumb.Item>
+            <Breadcrumb.Item>List</Breadcrumb.Item>
+            <Breadcrumb.Item>App</Breadcrumb.Item>
+          </Breadcrumb> */}
+          <Route path="/" exact component={Splash} />
+          <Route path="/games" component={Games} />
+          <Route path="/teams" component={Teams} />
+        </Layout.Content>
+        <Layout.Footer>
+          Site by The Pho House
+          <br />
+          <div>
+            Logo made with{' '}
+            <a href="https://www.designevo.com/en/" title="Free Online Logo Maker">
+              DesignEvo
+            </a>
+          </div>
+        </Layout.Footer>
+      </Layout>
     );
   }
 }

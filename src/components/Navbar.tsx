@@ -2,14 +2,15 @@
 import React from 'react';
 import { jsx, css } from '@emotion/core';
 import { Menu } from 'antd';
-import { ClickParam } from 'antd/lib/menu';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { selectPath } from '../redux/selectors';
 
 const { Item } = Menu;
 
-type State = {
+interface Props {
   path: string;
-};
+}
 
 const linkMap: {
   name: string;
@@ -26,21 +27,9 @@ const style = css`
   line-height: 64px;
 `;
 
-export default class Navbar extends React.Component<{}, State> {
-  state = {
-    path: '/'
-  };
-
-  handleMenuClick = (event: ClickParam) => this.setState({ path: event.key });
-
+class Navbar extends React.PureComponent<Props> {
   render = () => (
-    <Menu
-      theme="dark"
-      mode="horizontal"
-      onClick={this.handleMenuClick}
-      selectedKeys={[this.state.path]}
-      css={style}
-    >
+    <Menu theme="dark" mode="horizontal" selectedKeys={[this.props.path]} css={style}>
       {linkMap.map(link => (
         <Item key={link.path}>
           <Link to={link.path}>{link.name}</Link>
@@ -49,3 +38,9 @@ export default class Navbar extends React.Component<{}, State> {
     </Menu>
   );
 }
+
+const mapStateToProps = (state: any) => ({
+  path: selectPath(state)
+});
+
+export default connect(mapStateToProps)(Navbar);
